@@ -1,10 +1,36 @@
 pipeline {
-  agent { label 'docker-ssh-slave' }
-  stages {
-    stage('Test') {
-      steps {
-        sh 'docker pull node:16-alpine && node --version'
-      }
+    agent {
+        // Define the label of the remote JNLP slave
+        label 'docker-jnlp-slave'
     }
-  }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'echo "Running on remote slave"'
+            }
+        }
+        stage('Back-end') {
+            agent {
+                // Define Docker agent for the back-end stage
+                docker { 
+                    image 'maven:3.8.1-adoptopenjdk-11' 
+                }
+            }
+            steps {
+                sh 'mvn --version'
+            }
+        }
+        stage('Front-end') {
+            agent {
+                // Define Docker agent for the front-end stage
+                docker { 
+                    image 'node:16-alpine' 
+                }
+            }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
 }
+
