@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo "Running on remote slave"'
+                sh 'echo "Running on remote slave" && uname -a'
             }
         }
         stage('Back-end') {
