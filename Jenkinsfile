@@ -1,7 +1,7 @@
 pipeline {
     agent {
         // Define the label of the remote JNLP slave
-        label 'docker-jnlp-slave'
+        label 'java-docker-slave'
     }
     stages {
         stage('Test') {
